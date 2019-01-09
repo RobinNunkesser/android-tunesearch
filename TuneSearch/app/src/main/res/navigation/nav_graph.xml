@@ -5,5 +5,9 @@
             app:startDestination="@id/mainFragment">
 
     <fragment android:id="@+id/mainFragment" android:name="de.hshl.isd.tunesearch.ui.main.MainFragment"
-              android:label="main_fragment" tools:layout="@layout/main_fragment"/>
+              android:label="main_fragment" tools:layout="@layout/main_fragment">
+        <action android:id="@+id/action_mainFragment_to_trackFragment" app:destination="@id/trackFragment"/>
+    </fragment>
+    <fragment android:id="@+id/trackFragment" android:name="de.hshl.isd.tunesearch.ui.tracklist.TrackFragment"
+              android:label="fragment_track_list" tools:layout="@layout/fragment_track_list"/>
 </navigation>

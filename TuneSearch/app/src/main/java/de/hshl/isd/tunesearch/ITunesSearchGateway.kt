@@ -11,7 +11,7 @@ class ITunesSearchGateway {
         val service = retrofit.create(ITunesSearchAPI::class.java)
         try {
             val response = service.search(term).execute()
-            return Response.Success<List<TrackEntity>>(response.body()!!.results)
+            return Response.Success(response.body()!!.results)
         } catch (t: Throwable) {
             return Response.Failure(t)
         }
