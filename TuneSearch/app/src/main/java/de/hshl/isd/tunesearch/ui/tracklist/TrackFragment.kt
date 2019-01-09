@@ -30,8 +30,6 @@ class TrackFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-/*        viewModel = ViewModelProviders.of(this)
-            .get(TrackListViewModel::class.java)*/
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(TrackListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")

@@ -39,19 +39,8 @@ class MainFragment : Fragment(), OutputBoundary {
     override fun receive(response: Response) {
         when (response) {
             is Response.Success<*> -> {
-                val tracks = (response.value as List<TrackEntity>).sorted()
-                val collections = tracks.groupBy { it.collectionName }
-                val trackList: MutableList<ItemViewModel> = mutableListOf()
-                for (collection in collections.keys) {
-                    trackList.add(ItemViewModel(collection))
-                    for (track in collections[collection]!!) {
-                        trackList.add(TrackViewModel(track.artistName, track.artworkUrl100, "${track.trackNumber} - ${track.trackName}"))
-                    }
-                }
-                viewModel.submitData(trackList)
-
+                viewModel.submitData(response.value as List<ItemViewModel>)
                 findNavController().navigate(R.id.action_mainFragment_to_trackFragment)
-
             }
             is Response.Failure -> {
                 Log.i(tag, """${response.error.localizedMessage}""")
