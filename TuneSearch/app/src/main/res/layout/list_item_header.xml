@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:textStyle="bold"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         tools:ignore="UnusedAttribute"

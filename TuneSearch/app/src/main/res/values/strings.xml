@@ -2,4 +2,5 @@
     <string name="app_name" translatable="false">TuneSearch</string>
     <string name="button_search">Search</string>
     <string name="hint_search">Search term</string>
+    <string name="action_licenses" translatable="false">Acknowledgements</string>
 </resources>
