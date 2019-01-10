@@ -1,5 +1,6 @@
 package de.hshl.isd.tunesearch
 
+import android.util.Log
 import de.hshl.isd.tunesearch.common.InputBoundary
 import de.hshl.isd.tunesearch.common.OutputBoundary
 import de.hshl.isd.tunesearch.common.Response
@@ -14,13 +15,12 @@ class Interactor : InputBoundary<SearchRequest> {
            when (response) {
                is Response.Success<*> -> {
                    val tracks = (response.value as List<TrackEntity>).sorted()
-
                    val collections = tracks.groupBy { it.collectionName }
                    val trackList: MutableList<ItemViewModel> = mutableListOf()
                    for (collection in collections.keys) {
                        trackList.add(ItemViewModel(collection))
                        for (track in collections[collection]!!) {
-                           trackList.add(present(track))
+                           trackList.add(TrackPresenter().present(track))
                        }
                    }
                    outputBoundary.receive(Response.Success(trackList))

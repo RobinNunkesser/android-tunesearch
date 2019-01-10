@@ -43,12 +43,12 @@ class MainFragment : Fragment(), OutputBoundary {
         } ?: throw Exception("Invalid Activity")
         searchButton.setOnClickListener {
             inputBoundary.send(SearchRequest(searchTermEditText.text.toString()), outputBoundary = this)
-          //  searchButton.isEnabled = false
+            searchButton.isEnabled = false
         }
     }
 
     override fun receive(response: Response) {
-        //searchButton.isEnabled = true
+        searchButton.isEnabled = true
         when (response) {
             is Response.Success<*> -> {
                 viewModel.submitData(response.value as List<ItemViewModel>)
