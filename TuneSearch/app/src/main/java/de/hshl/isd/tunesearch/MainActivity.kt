@@ -1,11 +1,10 @@
 package de.hshl.isd.tunesearch
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import android.content.Intent
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
 
         when (id) {
-            R.id.action_info -> startActivity(Intent(this, OssLicensesMenuActivity::class.java));
+            R.id.action_info -> startActivity(Intent(this, OssLicensesMenuActivity::class.java))
         }
 
 
