@@ -4,19 +4,18 @@ import android.app.AlertDialog
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.*
 import androidx.navigation.fragment.findNavController
+import de.hshl.isd.basiccleanarch.Displayer
+import de.hshl.isd.basiccleanarch.Response
+import de.hshl.isd.basiccleanarch.UseCase
 import de.hshl.isd.tunesearch.*
-import de.hshl.isd.tunesearch.common.InputBoundary
-import de.hshl.isd.tunesearch.common.OutputBoundary
-import de.hshl.isd.tunesearch.common.Response
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment : Fragment(), OutputBoundary {
+class MainFragment : Fragment(), Displayer {
 
     private lateinit var viewModel: TrackListViewModel
-    private val inputBoundary: InputBoundary<SearchRequest> = Interactor()
+    private val interactor: UseCase<SearchRequest, TrackEntity, TrackViewModel> = Interactor(TrackPresenter())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,23 +41,24 @@ class MainFragment : Fragment(), OutputBoundary {
             ViewModelProviders.of(this).get(TrackListViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         searchButton.setOnClickListener {
-            inputBoundary.send(SearchRequest(searchTermEditText.text.toString()), outputBoundary = this)
+            interactor.execute(SearchRequest(searchTermEditText.text.toString()), displayer = this)
             //searchButton.isEnabled = false
         }
     }
 
-    override fun receive(response: Response) {
+    override fun display(result: Response) {
         //searchButton.isEnabled = true
-        when (response) {
+        when (result) {
             is Response.Success<*> -> {
-                viewModel.submitData(response.value as List<ItemViewModel>)
+                viewModel.submitData(result.value as List<ItemViewModel>)
                 findNavController().navigate(R.id.action_mainFragment_to_trackFragment)
             }
             is Response.Failure -> {
                 val builder: AlertDialog.Builder? = activity?.let {
                     AlertDialog.Builder(it)
                 }
-                builder?.setMessage(response.error.localizedMessage)?.setTitle(android.R.string.dialog_alert_title)?.setPositiveButton(android.R.string.ok, null)
+                builder?.setMessage(result.error.localizedMessage)?.setTitle(android.R.string.dialog_alert_title)
+                    ?.setPositiveButton(android.R.string.ok, null)
                 val dialog: AlertDialog? = builder?.create()
                 dialog?.show()
             }

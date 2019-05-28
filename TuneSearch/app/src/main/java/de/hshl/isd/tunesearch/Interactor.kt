@@ -1,15 +1,17 @@
 package de.hshl.isd.tunesearch
 
-import android.util.Log
-import de.hshl.isd.tunesearch.common.InputBoundary
-import de.hshl.isd.tunesearch.common.OutputBoundary
-import de.hshl.isd.tunesearch.common.Response
+import de.hshl.isd.basiccleanarch.Displayer
+import de.hshl.isd.basiccleanarch.Presenter
+import de.hshl.isd.basiccleanarch.Response
+import de.hshl.isd.basiccleanarch.UseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 
-class Interactor : InputBoundary<SearchRequest> {
-    override fun send(request: SearchRequest, outputBoundary: OutputBoundary) {
+class Interactor(override val presenter: Presenter<TrackEntity, TrackViewModel>) :
+    UseCase<SearchRequest, TrackEntity, TrackViewModel> {
+
+    override fun execute(request: SearchRequest, displayer: Displayer) {
        GlobalScope.async {
            val response = ITunesSearchGateway().search(request.term)
            when (response) {
@@ -20,13 +22,13 @@ class Interactor : InputBoundary<SearchRequest> {
                    for (collection in collections.keys) {
                        trackList.add(ItemViewModel(collection))
                        for (track in collections[collection]!!) {
-                           trackList.add(TrackPresenter().present(track))
+                           trackList.add(presenter.present(track))
                        }
                    }
-                   outputBoundary.receive(Response.Success(trackList))
+                   displayer.display(Response.Success(trackList))
                }
                is Response.Failure -> {
-                   outputBoundary.receive(response)
+                   displayer.display(response)
                }
            }
        }

@@ -17,6 +17,8 @@ class TrackListAdapter : ListAdapter<ItemViewModel, TrackListAdapter.ItemViewHol
         override fun areContentsTheSame(p0: ItemViewModel, p1: ItemViewModel): Boolean = p0.content.equals(p1.content)
     }) {
 
+    override fun getItemViewType(position: Int): Int = getItem(position)::class.hashCode()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : ItemViewHolder {
         when (viewType) {
@@ -39,7 +41,6 @@ class TrackListAdapter : ListAdapter<ItemViewModel, TrackListAdapter.ItemViewHol
         }
     }
 
-    override fun getItemViewType(position: Int): Int = getItem(position)::class.hashCode()
 
     open inner class ItemViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val mContentView: TextView = mView.content
