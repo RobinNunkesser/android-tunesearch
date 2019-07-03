@@ -1,4 +1,4 @@
-package de.hshl.isd.tunesearch.ui.tracklist
+package de.hshl.isd.tunesearch
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import de.hshl.isd.tunesearch.R
-import de.hshl.isd.tunesearch.TrackListAdapter
-import de.hshl.isd.tunesearch.TrackListViewModel
 import kotlinx.android.synthetic.main.fragment_track_list.*
 
 

@@ -1,4 +1,4 @@
-package de.hshl.isd.tunesearch.ui.main
+package de.hshl.isd.tunesearch
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import de.hshl.isd.basiccleanarch.Displayer
 import de.hshl.isd.basiccleanarch.Response
 import de.hshl.isd.basiccleanarch.UseCase
-import de.hshl.isd.tunesearch.*
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment(), Displayer {
