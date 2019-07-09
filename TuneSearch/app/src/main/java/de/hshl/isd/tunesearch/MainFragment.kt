@@ -14,7 +14,10 @@ import kotlinx.android.synthetic.main.main_fragment.*
 class MainFragment : Fragment(), Displayer {
 
     private lateinit var viewModel: TrackListViewModel
-    private val interactor: UseCase<SearchRequest, TrackEntity, TrackViewModel> = Interactor(TrackPresenter())
+    private val interactor: UseCase<SearchRequest, TrackEntity, TrackViewModel> = Interactor(
+        TrackPresenter(),
+        ITunesSearchGateway()
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

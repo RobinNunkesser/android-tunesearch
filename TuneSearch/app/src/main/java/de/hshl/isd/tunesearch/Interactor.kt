@@ -8,12 +8,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 
-class Interactor(override val presenter: Presenter<TrackEntity, TrackViewModel>) :
+class Interactor(
+    override val presenter: Presenter<TrackEntity, TrackViewModel>,
+    val gateway: ITunesSearchGateway
+) :
     UseCase<SearchRequest, TrackEntity, TrackViewModel> {
 
     override fun execute(request: SearchRequest, displayer: Displayer) {
        GlobalScope.async {
-           val response = ITunesSearchGateway().search(request.term)
+           val response = gateway.search(request.term)
            when (response) {
                is Response.Success<*> -> {
                    val tracks = (response.value as List<TrackEntity>).sorted()
