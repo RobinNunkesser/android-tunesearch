@@ -9,31 +9,28 @@ import kotlinx.coroutines.async
 
 
 class SearchInteractor(
-    override val presenter: Presenter<TrackEntity, TrackViewModel>,
+    override val presenter: Presenter<List<TrackEntity>, List<ItemViewModel>>,
     val gateway: ITunesSearchGateway
 ) :
-    UseCase<SearchRequest, TrackEntity, TrackViewModel> {
+    UseCase<SearchRequest, List<TrackEntity>, List<ItemViewModel>> {
 
-    override fun execute(request: SearchRequest, displayer: Displayer) {
+    override fun execute(
+        request: SearchRequest,
+        displayer: Displayer<List<ItemViewModel>>,
+        requestCode: Int
+    ) {
        GlobalScope.async {
            val response = gateway.search(request.term)
            when (response) {
                is Response.Success<*> -> {
-                   val tracks = (response.value as List<TrackEntity>).sorted()
-                   val collections = tracks.groupBy { it.collectionName }
-                   val trackList: MutableList<ItemViewModel> = mutableListOf()
-                   for (collection in collections.keys) {
-                       trackList.add(ItemViewModel(collection))
-                       for (track in collections[collection]!!) {
-                           trackList.add(presenter.present(track))
-                       }
-                   }
-                   displayer.display(Response.Success(trackList))
+                   val viewModel = presenter.present(response.value as List<TrackEntity>)
+                   displayer.display(viewModel)
                }
                is Response.Failure -> {
-                   displayer.display(response)
+                   displayer.display(response.error)
                }
            }
        }
     }
+
 }

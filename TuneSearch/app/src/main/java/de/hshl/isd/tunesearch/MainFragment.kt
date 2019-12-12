@@ -7,17 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import de.hshl.isd.basiccleanarch.Displayer
-import de.hshl.isd.basiccleanarch.Response
-import de.hshl.isd.basiccleanarch.Response.Failure
-import de.hshl.isd.basiccleanarch.Response.Success
-import de.hshl.isd.basiccleanarch.UseCase
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment : Fragment(), Displayer {
+class MainFragment : Fragment(), Displayer<List<ItemViewModel>> {
 
     private lateinit var viewModel: TrackListViewModel
-    private val interactor: UseCase<SearchRequest, TrackEntity, TrackViewModel> = SearchInteractor(
-        TrackPresenter(),
+    private val interactor = SearchInteractor(
+        TrackListPresenter(),
         ITunesSearchGateway()
     )
 
@@ -49,24 +45,19 @@ class MainFragment : Fragment(), Displayer {
         }
     }
 
-    override fun display(result: Response) {
-        //searchButton.isEnabled = true
-        when (result) {
-            is Success<*> -> {
-                viewModel.data = result.value as List<ItemViewModel>
-                findNavController().navigate(R.id.action_mainFragment_to_trackFragment)
-            }
-            is Failure -> {
-                activity?.let {
-                    val builder = AlertDialog.Builder(it)
-                    val dialog = builder.setMessage(result.error.localizedMessage)
-                        .setTitle(android.R.string.dialog_alert_title)
-                        .setPositiveButton(android.R.string.ok, null).create()
-                    dialog.show()
-                }
-            }
-        }
+    override fun display(success: List<ItemViewModel>, requestCode: Int) {
+        viewModel.data = success
+        findNavController().navigate(R.id.action_mainFragment_to_trackFragment)
+    }
 
+    override fun display(error: Throwable) {
+        activity?.let {
+            val builder = AlertDialog.Builder(it)
+            val dialog = builder.setMessage(error.localizedMessage)
+                .setTitle(android.R.string.dialog_alert_title)
+                .setPositiveButton(android.R.string.ok, null).create()
+            dialog.show()
+        }
     }
 
 
