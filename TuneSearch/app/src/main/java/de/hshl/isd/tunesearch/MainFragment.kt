@@ -52,7 +52,7 @@ class MainFragment : Fragment(), Displayer {
         //searchButton.isEnabled = true
         when (result) {
             is Response.Success<*> -> {
-                viewModel.submitData(result.value as List<ItemViewModel>)
+                viewModel.data = result.value as List<ItemViewModel>
                 findNavController().navigate(R.id.action_mainFragment_to_trackFragment)
             }
             is Response.Failure -> {
