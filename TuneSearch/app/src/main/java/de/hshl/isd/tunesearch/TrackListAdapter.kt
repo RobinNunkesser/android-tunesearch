@@ -14,7 +14,8 @@ import kotlinx.android.synthetic.main.fragment_track.view.*
 class TrackListAdapter : ListAdapter<ItemViewModel, TrackListAdapter.ItemViewHolder>(
     object : DiffUtil.ItemCallback<ItemViewModel>() {
         override fun areItemsTheSame(p0: ItemViewModel, p1: ItemViewModel): Boolean = p0 == p1
-        override fun areContentsTheSame(p0: ItemViewModel, p1: ItemViewModel): Boolean = p0.content.equals(p1.content)
+        override fun areContentsTheSame(p0: ItemViewModel, p1: ItemViewModel): Boolean =
+            p0.content.equals(p1.content)
     }) {
 
     override fun getItemViewType(position: Int): Int = getItem(position)::class.hashCode()
@@ -22,10 +23,14 @@ class TrackListAdapter : ListAdapter<ItemViewModel, TrackListAdapter.ItemViewHol
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : ItemViewHolder {
         when (viewType) {
-            ItemViewModel::class.hashCode() -> return ItemViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_header, parent,  false))
-            else -> return TrackViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_track, parent, false))
+            ItemViewModel::class.hashCode() -> return ItemViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.list_item_header, parent, false)
+            )
+            else -> return TrackViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.fragment_track, parent, false)
+            )
         }
     }
 
@@ -47,8 +52,8 @@ class TrackListAdapter : ListAdapter<ItemViewModel, TrackListAdapter.ItemViewHol
     }
 
     inner class TrackViewHolder(mView: View) : ItemViewHolder(mView) {
-        val mArtistTextView : TextView = mView.artist
-        val mArtworkImageView : ImageView = mView.artwork
+        val mArtistTextView: TextView = mView.artist
+        val mArtworkImageView: ImageView = mView.artwork
     }
 
 }

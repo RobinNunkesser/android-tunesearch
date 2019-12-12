@@ -8,7 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 
-class Interactor(
+class SearchInteractor(
     override val presenter: Presenter<TrackEntity, TrackViewModel>,
     val gateway: ITunesSearchGateway
 ) :

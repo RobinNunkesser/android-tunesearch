@@ -8,7 +8,8 @@ open class ITunesSearchGateway {
 
     open suspend fun search(term: String): Response {
         val retrofit =
-            Retrofit.Builder().baseUrl("https://itunes.apple.com").addConverterFactory(GsonConverterFactory.create())
+            Retrofit.Builder().baseUrl("https://itunes.apple.com")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
         val service = retrofit.create(ITunesSearchAPI::class.java)
         try {

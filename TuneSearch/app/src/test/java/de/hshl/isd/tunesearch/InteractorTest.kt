@@ -32,7 +32,7 @@ class InteractorTest {
             on { present(model) } doReturn TrackViewModel("", "", "")
         }
 
-        Interactor(mockPresenter, mockGateway).execute(
+        SearchInteractor(mockPresenter, mockGateway).execute(
             SearchRequest("term"),
             MockDisplayer(future)
         )

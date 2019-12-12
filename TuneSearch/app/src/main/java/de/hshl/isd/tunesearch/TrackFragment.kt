@@ -9,13 +9,9 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_track_list.*
 
 
-/**
- * A fragment representing a list of Items.
- */
 class TrackFragment : Fragment() {
 
     private lateinit var viewModel: TrackListViewModel
-    private val adapter = TrackListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -26,9 +22,9 @@ class TrackFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(activity!!).get(TrackListViewModel::class.java)
 
-        adapter.submitList(viewModel.data)
-
-        list.adapter = adapter
+        list.adapter = TrackListAdapter().apply {
+            submitList(viewModel.data)
+        }
 
     }
 
