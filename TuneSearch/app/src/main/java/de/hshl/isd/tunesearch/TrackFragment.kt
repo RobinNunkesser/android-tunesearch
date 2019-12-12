@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_track_list.*
 
 
@@ -23,17 +22,12 @@ class TrackFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_track_list, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel = activity?.run {
-            ViewModelProviders.of(this).get(TrackListViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(activity!!).get(TrackListViewModel::class.java)
 
         adapter.submitList(viewModel.data)
 
-        list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
 
     }
