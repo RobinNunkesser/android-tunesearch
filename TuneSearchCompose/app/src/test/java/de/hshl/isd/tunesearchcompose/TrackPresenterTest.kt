@@ -15,7 +15,7 @@ class TrackPresenterTest {
     fun testPresent() {
         val model = TrackEntity(artist, "XY", trackName, trackNumber, 1, "", url100)
         val viewModel = TrackPresenter().present(model)
-        Assert.assertEquals(artist, viewModel.artistName)
+        Assert.assertEquals(artist, viewModel.subtitle)
         Assert.assertEquals(url100, viewModel.image)
         Assert.assertEquals("${trackNumber} - ${trackName}", viewModel.content)
     }

@@ -1,27 +1,37 @@
 package de.hshl.isd.tunesearchcompose
 
-import android.content.Context
-import android.content.Intent
+import android.util.Log
 import androidx.compose.Composable
-import androidx.core.content.ContextCompat.startActivity
-import androidx.ui.animation.animate
-import androidx.ui.core.Alignment
+import androidx.compose.state
 import androidx.ui.core.Modifier
-import androidx.ui.core.drawOpacity
-import androidx.ui.foundation.Box
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.TextField
+import androidx.ui.foundation.TextFieldValue
 import androidx.ui.layout.*
 import androidx.ui.material.Button
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.dp
-import androidx.ui.unit.sp
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import de.hshl.isd.basiccleanarch.Displayer
 
 @Composable
 fun SearchScreen() {
+    val interactor = SearchInteractor(
+        TrackListPresenter(),
+        ITunesSearchGateway()
+    )
+
+    val displayer = object : Displayer<Map<String, List<TrackViewModel>>> {
+        override fun display(success: Map<String, List<TrackViewModel>>, requestCode: Int) {
+            Log.i("trst","Working")
+        }
+
+        override fun display(error: Throwable) {
+            Log.e("SearchScreen",error.localizedMessage)
+        }
+
+    }
+
     Scaffold(
         topAppBar = {
             TopAppBar(title = { Text("Search") }/*,
@@ -39,10 +49,18 @@ fun SearchScreen() {
             )
         },
         bodyContent = {
-            Button(onClick = {
-                Status.currentScreen = Screen.Tracks()
-            }) {
-                Text("Tracks")
+            Column(verticalArrangement = Arrangement.Center) {
+                val searchTermTextField = state { TextFieldValue("Jack Johnson") }
+                TextField(value = searchTermTextField.value,
+                    modifier = Modifier.padding(8.dp),
+                    onValueChange = {
+                        searchTermTextField.value = it
+                    })
+                Button(onClick = {
+                    interactor.execute(SearchRequest(searchTermTextField.value.text),displayer)
+                }) {
+                    Text("Search")
+                }
             }
         }
     )

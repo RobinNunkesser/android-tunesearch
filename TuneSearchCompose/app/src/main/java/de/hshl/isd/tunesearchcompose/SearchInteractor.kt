@@ -9,14 +9,14 @@ import kotlinx.coroutines.async
 
 
 class SearchInteractor(
-    override val presenter: Presenter<List<TrackEntity>, List<ItemViewModel>>,
+    override val presenter: Presenter<List<TrackEntity>, Map<String, List<TrackViewModel>>>,
     val gateway: ITunesSearchGateway
 ) :
-    UseCase<SearchRequest, List<TrackEntity>, List<ItemViewModel>> {
+    UseCase<SearchRequest, List<TrackEntity>, Map<String, List<TrackViewModel>>> {
 
     override fun execute(
         request: SearchRequest,
-        displayer: Displayer<List<ItemViewModel>>,
+        displayer: Displayer<Map<String, List<TrackViewModel>>>,
         requestCode: Int
     ) {
        GlobalScope.async {
