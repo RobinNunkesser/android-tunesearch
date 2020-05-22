@@ -12,7 +12,7 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <bytecodeTargetLevel>
-      <module name="TuneSearch.app" target="1.7" />
+      <module name="TuneSearch_Compose.app" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
