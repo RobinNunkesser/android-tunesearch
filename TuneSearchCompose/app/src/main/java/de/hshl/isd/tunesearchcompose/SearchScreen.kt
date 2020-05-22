@@ -61,11 +61,6 @@ fun SearchScreen() {
                 }) {
                     Text("Search")
                 }
-                Button(onClick = {
-                    Status.currentScreen = Screen.Tracks(mapOf("Test 1" to listOf(TrackViewModel("s","i","t"))))
-                }) {
-                    Text("Test")
-                }
             }
         }
     )

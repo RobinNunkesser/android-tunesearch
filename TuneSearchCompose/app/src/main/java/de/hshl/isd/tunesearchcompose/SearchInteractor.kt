@@ -4,8 +4,7 @@ import de.hshl.isd.basiccleanarch.Displayer
 import de.hshl.isd.basiccleanarch.Presenter
 import de.hshl.isd.basiccleanarch.Response
 import de.hshl.isd.basiccleanarch.UseCase
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 
 
 class SearchInteractor(
@@ -19,16 +18,22 @@ class SearchInteractor(
         displayer: Displayer<Map<String, List<TrackViewModel>>>,
         requestCode: Int
     ) {
-       GlobalScope.async {
-           val response = gateway.search(request.term)
-           when (response) {
+        val scope = MainScope()
+       scope.launch {
+           withContext(Dispatchers.IO) {
+           when (val response = gateway.search(request.term)) {
                is Response.Success<*> -> {
                    val viewModel = presenter.present(response.value as List<TrackEntity>)
-                   displayer.display(viewModel)
+                   withContext(Dispatchers.Main) {
+                       displayer.display(viewModel)
+                   }
                }
                is Response.Failure -> {
-                   displayer.display(response.error)
+                   withContext(Dispatchers.Main) {
+                       displayer.display(response.error)
+                   }
                }
+           }
            }
        }
     }
