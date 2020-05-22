@@ -23,7 +23,7 @@ fun SearchScreen() {
 
     val displayer = object : Displayer<Map<String, List<TrackViewModel>>> {
         override fun display(success: Map<String, List<TrackViewModel>>, requestCode: Int) {
-            Log.i("trst","Working")
+            Status.currentScreen = Screen.Tracks(success)
         }
 
         override fun display(error: Throwable) {
@@ -60,6 +60,11 @@ fun SearchScreen() {
                     interactor.execute(SearchRequest(searchTermTextField.value.text),displayer)
                 }) {
                     Text("Search")
+                }
+                Button(onClick = {
+                    Status.currentScreen = Screen.Tracks(mapOf("Test 1" to listOf(TrackViewModel("s","i","t"))))
+                }) {
+                    Text("Test")
                 }
             }
         }

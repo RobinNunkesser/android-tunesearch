@@ -5,6 +5,7 @@ import androidx.compose.Composable
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.*
 import androidx.ui.material.IconButton
 import androidx.ui.material.Scaffold
@@ -14,7 +15,7 @@ import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.unit.dp
 
 @Composable
-fun TracksScreen() {
+fun TracksScreen(collections : Map<String, List<TrackViewModel>>) {
     Scaffold(
         topAppBar = {
             TopAppBar(title = { Text("Tracks") },
@@ -28,7 +29,17 @@ fun TracksScreen() {
             )
         },
         bodyContent = {
-            Text("Hello")
+            VerticalScroller {
+                Column {
+                    collections.forEach { (title, tracks) ->
+                        SectionHeader(title = title)
+                        tracks.forEach { track ->
+                            ItemRow(track)
+                        }
+                    }
+                }
+            }
+
         }
     )
 }

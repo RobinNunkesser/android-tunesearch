@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 sealed class Screen {
     class Search() : Screen()
-    class Tracks() : Screen()
+    data class Tracks(val collections: Map<String, List<TrackViewModel>>) : Screen()
 }
 
 @Model
@@ -38,7 +38,7 @@ private fun AppContent() {
         Surface(color = MaterialTheme.colors.background) {
             when (screen) {
                 is Screen.Search -> SearchScreen()
-                is Screen.Tracks -> TracksScreen()
+                is Screen.Tracks -> TracksScreen(screen.collections)
             }
         }
     }
