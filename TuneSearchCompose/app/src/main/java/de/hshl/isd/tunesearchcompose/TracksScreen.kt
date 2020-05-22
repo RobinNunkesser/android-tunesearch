@@ -1,8 +1,6 @@
 package de.hshl.isd.tunesearchcompose
 
-import android.content.Context
 import androidx.compose.Composable
-import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.VerticalScroller
@@ -12,7 +10,6 @@ import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowBack
-import androidx.ui.unit.dp
 
 @Composable
 fun TracksScreen(collections : Map<String, List<TrackViewModel>>) {
@@ -34,7 +31,7 @@ fun TracksScreen(collections : Map<String, List<TrackViewModel>>) {
                     collections.forEach { (title, tracks) ->
                         SectionHeader(title = title)
                         tracks.forEach { track ->
-                            ItemRow(track)
+                            TrackRow(track)
                         }
                     }
                 }
