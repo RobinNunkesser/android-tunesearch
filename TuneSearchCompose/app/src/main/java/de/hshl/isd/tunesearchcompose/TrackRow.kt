@@ -10,22 +10,25 @@ import androidx.ui.unit.dp
 
 @Composable
 fun TrackRow(item: TrackViewModel) {
-    Row(
+    Column(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
     ) {
-        NetworkImageComponentPicasso(item.image,modifier = Modifier.preferredHeightIn(maxHeight = 200.dp) +
-                Modifier.preferredWidthIn(maxWidth = 200.dp))
-        Column {
-            Text(
-                text = item.title,
-                modifier = Modifier.padding(top = 4.dp),
-                style = MaterialTheme.typography.body1
+        Row(modifier = Modifier.padding(top = 4.dp)) {
+            NetworkImageComponentPicasso(
+                item.image, modifier = Modifier.preferredHeightIn(maxHeight = 200.dp) +
+                        Modifier.preferredWidthIn(maxWidth = 200.dp) + Modifier.padding(end = 4.dp)
             )
-            Text(
-                text = item.subtitle,
-                modifier = Modifier.padding(top = 4.dp),
-                style = MaterialTheme.typography.caption
-            )
+            Column {
+                Text(
+                    text = item.title,
+                    style = MaterialTheme.typography.body1
+                )
+                Text(
+                    text = item.subtitle,
+                    modifier = Modifier.padding(top = 4.dp),
+                    style = MaterialTheme.typography.caption
+                )
+            }
         }
         Divider(
             Modifier.padding(top = 8.dp, bottom = 4.dp)

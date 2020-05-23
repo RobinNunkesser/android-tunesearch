@@ -49,8 +49,8 @@ fun SearchScreen() {
             )
         },
         bodyContent = {
-            Column(verticalArrangement = Arrangement.Center) {
-                val searchTermTextField = state { TextFieldValue("Jack Johnson") }
+            Column(Modifier.fillMaxSize().padding(8.dp), verticalArrangement = Arrangement.Center) {
+            val searchTermTextField = state { TextFieldValue("Jack Johnson") }
                 TextField(value = searchTermTextField.value,
                     modifier = Modifier.padding(8.dp),
                     onValueChange = {
