@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 sealed class Screen {
     class Search() : Screen()
-    data class Tracks(val collections: Map<String, List<TrackViewModel>>) : Screen()
+    data class Tracks(val collections: List<CollectionViewModel>) : Screen()
 }
 
 @Model

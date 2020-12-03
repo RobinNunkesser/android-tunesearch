@@ -1,4 +1,4 @@
-package de.hshl.isd.tunesearchcompose.core
+package de.hshl.isd.tunesearchcompose.core.ports
 
 data class TrackEntity(
     val artistName: String,

@@ -13,23 +13,23 @@ import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.unit.dp
 import de.hshl.isd.basiccleanarch.Displayer
+import de.hshl.isd.tunesearchcompose.core.MockSearchTracksCommand
+import de.hshl.isd.tunesearchcompose.core.ports.CollectionEntity
+import de.hshl.isd.tunesearchcompose.core.ports.SearchTracksDTO
 
 @Composable
 fun SearchScreen() {
-    val interactor = SearchInteractor(
-        TrackListPresenter(),
-        ITunesSearchGateway()
-    )
+    val service = MockSearchTracksCommand()
 
-    val displayer = object : Displayer<Map<String, List<TrackViewModel>>> {
-        override fun display(success: Map<String, List<TrackViewModel>>, requestCode: Int) {
-            Status.currentScreen = Screen.Tracks(success)
-        }
+    fun success(collections: List<CollectionEntity>) {
+        val viewModel = collections.map { collection ->
+            CollectionViewModel(name = collection.name,
+            tracks = collection.tracks.map { track -> TrackViewModel(track.artistName, track.artworkUrl, "${track.trackNumber} - ${track.trackName}") }) }
+        Status.currentScreen = Screen.Tracks(viewModel)
+    }
 
-        override fun display(error: Throwable) {
-            Log.e("SearchScreen",error.localizedMessage)
-        }
-
+    fun failure(error: Throwable) {
+        Log.e("SearchScreen",error.localizedMessage)
     }
 
     Scaffold(
@@ -57,7 +57,10 @@ fun SearchScreen() {
                         searchTermTextField.value = it
                     })
                 Button(onClick = {
-                    interactor.execute(SearchRequest(searchTermTextField.value.text),displayer)
+                    service.execute(
+                        SearchTracksDTO(searchTermTextField.value.text),
+                        ::success,
+                        ::failure)
                 }) {
                     Text("Search")
                 }

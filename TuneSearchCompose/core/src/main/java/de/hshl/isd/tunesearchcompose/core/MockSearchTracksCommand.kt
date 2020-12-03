@@ -1,6 +1,11 @@
 package de.hshl.isd.tunesearchcompose.core
 
-class MockSearchTracksCommand {
+import de.hshl.isd.tunesearchcompose.core.ports.CollectionEntity
+import de.hshl.isd.tunesearchcompose.core.ports.SearchTracksCommand
+import de.hshl.isd.tunesearchcompose.core.ports.SearchTracksDTO
+import de.hshl.isd.tunesearchcompose.core.ports.TrackEntity
+
+class MockSearchTracksCommand : SearchTracksCommand {
     val mock = listOf(
         CollectionEntity(
             name = "From Here to Now to You",
@@ -425,4 +430,12 @@ class MockSearchTracksCommand {
             )
         )
     )
+
+    override fun execute(
+        inDTO: SearchTracksDTO,
+        successHandler: (success: List<CollectionEntity>) -> Unit,
+        errorHandler: (error: Throwable) -> Unit
+    ) {
+        successHandler(mock)
+    }
 }

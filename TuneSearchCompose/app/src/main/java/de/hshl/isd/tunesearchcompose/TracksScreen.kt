@@ -12,7 +12,7 @@ import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowBack
 
 @Composable
-fun TracksScreen(collections : Map<String, List<TrackViewModel>>) {
+fun TracksScreen(collections : List<CollectionViewModel>) {
     Scaffold(
         topAppBar = {
             TopAppBar(title = { Text("Tracks") },
@@ -28,9 +28,9 @@ fun TracksScreen(collections : Map<String, List<TrackViewModel>>) {
         bodyContent = {
             VerticalScroller {
                 Column {
-                    collections.forEach { (title, tracks) ->
-                        SectionHeader(title = title)
-                        tracks.forEach { track ->
+                    collections.forEach { collection ->
+                        SectionHeader(title = collection.name)
+                        collection.tracks.forEach { track ->
                             TrackRow(track)
                         }
                     }
