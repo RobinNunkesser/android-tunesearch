@@ -42,6 +42,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.gms:play-services-oss-licenses:16.0.1'
     implementation 'com.github.RobinNunkesser:basiccleanarch-gradle:1.1'
+    implementation 'de.hshl.isd:explicitarchitecture:0.0.1'
+    implementation 'de.hshl.isd:explicitarchitecture-tunesearch-mockcore:0.0.1'
+    implementation 'de.hshl.isd:explicitarchitecture-tunesearch-core-ports:0.0.1'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.19.0'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
