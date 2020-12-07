@@ -1,4 +1,4 @@
-package de.hshl.isd.tunesearch
+package de.hshl.isd.tunesearch.infrastructure
 
 data class TrackEntity(
     val artistName: String,
