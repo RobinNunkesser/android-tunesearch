@@ -2,26 +2,21 @@ package de.hshl.isd.tunesearch
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import de.hshl.isd.basiccleanarch.Displayer
-import de.hshl.isd.explicitarchitecture.tunesearch.core.MockSearchTracksCommand
 import de.hshl.isd.explicitarchitecture.tunesearch.core.ports.CollectionEntity
 import de.hshl.isd.explicitarchitecture.tunesearch.core.ports.SearchTracksDTO
+import de.hshl.isd.tunesearch.core.ConcreteSearchTracksCommand
+import de.hshl.isd.tunesearch.infrastructure.adapters.TunesSearchEngineAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment : Fragment(), Displayer<List<ItemViewModel>> {
+class MainFragment : Fragment() {
 
     private lateinit var viewModel: TrackListViewModel
-    private val interactor = SearchInteractor(
-        TrackListPresenter(),
-        ITunesSearchGateway()
-    )
 
-    val service = MockSearchTracksCommand()
+    val service = ConcreteSearchTracksCommand(TunesSearchEngineAdapter())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +24,9 @@ class MainFragment : Fragment(), Displayer<List<ItemViewModel>> {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.main, menu)
+        inflater.inflate(R.menu.main, menu)
     }
 
     override fun onCreateView(
@@ -43,10 +38,9 @@ class MainFragment : Fragment(), Displayer<List<ItemViewModel>> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!).get(TrackListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(TrackListViewModel::class.java)
 
         searchButton.setOnClickListener {
-            //interactor.execute(SearchRequest(searchTermEditText.text.toString()), displayer = this)
             service.execute(
                 SearchTracksDTO(searchTermEditText.text.toString()),
                 ::success,
@@ -75,15 +69,6 @@ class MainFragment : Fragment(), Displayer<List<ItemViewModel>> {
     }
 
     fun failure(error: Throwable) {
-        Log.e("SearchScreen", error.localizedMessage)
-    }
-
-    override fun display(success: List<ItemViewModel>, requestCode: Int) {
-        viewModel.data = success
-        findNavController().navigate(R.id.action_mainFragment_to_trackFragment)
-    }
-
-    override fun display(error: Throwable) {
         activity?.let {
             val builder = AlertDialog.Builder(it)
             val dialog = builder.setMessage(error.localizedMessage)

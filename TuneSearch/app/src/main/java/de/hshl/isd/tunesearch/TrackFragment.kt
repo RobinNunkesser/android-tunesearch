@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_track_list.*
 
 
@@ -20,7 +20,7 @@ class TrackFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!).get(TrackListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(TrackListViewModel::class.java)
 
         list.adapter = TrackListAdapter().apply {
             submitList(viewModel.data)

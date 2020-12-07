@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class TunesSearchEngineAdapter : TunesSearchEngine {
 
-    private lateinit var service: ITunesSearchAPI
+    private var service: ITunesSearchAPI
 
     init {
         val retrofit =
