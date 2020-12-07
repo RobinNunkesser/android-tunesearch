@@ -1,6 +1,5 @@
 package de.hshl.isd.tunesearch.core
 
-import de.hshl.isd.explicitarchitecture.tunesearch.core.MockSearchTracksCommand
 import de.hshl.isd.explicitarchitecture.tunesearch.core.ports.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -20,9 +19,8 @@ class ConcreteSearchTracksCommand(private val tunesSearchEngine: TunesSearchEngi
             withContext(Dispatchers.IO) {
                 val result = tunesSearchEngine.getSongs(inDTO.term)
                 withContext(Dispatchers.Main) {
-                    //result.onSuccess { successHandler(mapTracks(it)) }
-                    //result.onFailure { errorHandler(it) }
-                    successHandler(MockSearchTracksCommand().mock)
+                    result.onSuccess { successHandler(mapTracks(it)) }
+                    result.onFailure { errorHandler(it) }
                 }
             }
         }
