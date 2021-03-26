@@ -10,7 +10,7 @@ data class TrackEntity(
     val artworkUrl100: String
 ) : Comparable<TrackEntity> {
     override fun compareTo(other: TrackEntity): Int {
-        if (!collectionName.equals(other.collectionName)) return collectionName.compareTo(other.collectionName)
+        if (collectionName != other.collectionName) return collectionName.compareTo(other.collectionName)
         if (discNumber != other.discNumber) return discNumber.compareTo(other.discNumber)
         return trackNumber.compareTo(other.trackNumber)
     }
