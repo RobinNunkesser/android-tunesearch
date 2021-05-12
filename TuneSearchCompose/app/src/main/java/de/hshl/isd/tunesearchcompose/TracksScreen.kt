@@ -1,42 +1,27 @@
 package de.hshl.isd.tunesearchcompose
 
-import androidx.compose.Composable
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.layout.*
-import androidx.ui.material.IconButton
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.ArrowBack
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
 
 @Composable
-fun TracksScreen(collections : List<CollectionViewModel>) {
+fun TracksScreen(viewModel: MainViewModel) {
     Scaffold(
-        topAppBar = {
-            TopAppBar(title = { Text("Tracks") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        Status.currentScreen = Screen.Search()
-                    }) {
-                        Icon(Icons.Filled.ArrowBack)
-                    }
-                }
-            )
-        },
-        bodyContent = {
-            VerticalScroller {
-                Column {
-                    collections.forEach { collection ->
-                        SectionHeader(title = collection.name)
-                        collection.tracks.forEach { track ->
-                            TrackRow(track)
-                        }
-                    }
+        topBar = {
+            TopAppBar(title = { Text("Tracks") })
+        })
+    {
+
+        LazyColumn {
+            items(viewModel.collections) { collection ->
+                SectionHeader(title = collection.name)
+                collection.tracks.forEach { track ->
+                    TrackRow(track)
                 }
             }
-
         }
-    )
+    }
 }

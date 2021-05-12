@@ -1,12 +1,19 @@
 package de.hshl.isd.tunesearchcompose
 
-import androidx.compose.Composable
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Text
-import androidx.ui.layout.*
-import androidx.ui.material.Divider
-import androidx.ui.material.MaterialTheme
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.google.accompanist.coil.rememberCoilPainter
+
 
 @Composable
 fun TrackRow(item: TrackViewModel) {
@@ -14,9 +21,9 @@ fun TrackRow(item: TrackViewModel) {
         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
     ) {
         Row(modifier = Modifier.padding(top = 4.dp)) {
-            NetworkImageComponentPicasso(
-                item.image, modifier = Modifier.preferredHeightIn(maxHeight = 200.dp) +
-                        Modifier.preferredWidthIn(maxWidth = 200.dp) + Modifier.padding(end = 4.dp)
+            Image(
+                painter = rememberCoilPainter(item.image),
+                contentDescription = stringResource(R.string.image_content_desc)
             )
             Column {
                 Text(

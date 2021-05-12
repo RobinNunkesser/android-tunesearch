@@ -1,53 +1,30 @@
 package de.hshl.isd.tunesearchcompose
 
-import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.compose.Model
-import androidx.ui.animation.Crossfade
-import androidx.ui.core.setContent
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Surface
-import androidx.ui.tooling.preview.Preview
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import de.hshl.isd.tunesearchcompose.ui.theme.TuneSearchComposeTheme
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
+    private val mainViewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
-                AppContent()
-            }
+            MainContent(viewModel = mainViewModel)
         }
     }
 }
 
-sealed class Screen {
-    class Search() : Screen()
-    data class Tracks(val collections: List<CollectionViewModel>) : Screen()
-}
-
-@Model
-object Status  {
-    var currentScreen : Screen = Screen.Search()
-}
-
 @Composable
-private fun AppContent() {
-    Crossfade(Status.currentScreen) { screen ->
-        Surface(color = MaterialTheme.colors.background) {
-            when (screen) {
-                is Screen.Search -> SearchScreen()
-                is Screen.Tracks -> TracksScreen(screen.collections)
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MaterialTheme {
-        AppContent()
-    }
+fun MainContent(viewModel: MainViewModel) {
+    val navController = rememberNavController()
+    NavigationHost(navController,viewModel)
 }
