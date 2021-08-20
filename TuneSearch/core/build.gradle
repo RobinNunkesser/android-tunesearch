@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation("io.github.robinnunkesser:explicitarchitecture:0.1.0")
+    implementation("io.github.robinnunkesser:explicitarchitecture-tunesearch-core-ports:0.1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    testImplementation("junit:junit:4.+")
+}
