@@ -43,7 +43,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion =
             rootProject.extra["compose_version"] as String
-        kotlinCompilerVersion = "1.4.32"
     }
 }
 
@@ -56,8 +55,8 @@ dependencies {
     implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha07")
-    implementation("androidx.navigation:navigation-compose:1.0.0-alpha10")
+    implementation("androidx.activity:activity-compose:1.3.1")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha06")
     implementation("de.hshl.isd:explicitarchitecture:0.1.0")
     implementation("de.hshl.isd:explicitarchitecture-tunesearch-mockcore:0.0.3")
     implementation("de.hshl.isd:explicitarchitecture-tunesearch-core-ports:0.0.3")
